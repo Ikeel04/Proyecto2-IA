@@ -5,6 +5,7 @@ from algorithms.bfs import bfs
 from algorithms.dfs import dfs
 from algorithms.astar import astar
 from algorithms.greedy import greedy
+from visualization import maze_to_colors
 
 st.title("🧩 Resolvedor de Laberintos")
 
@@ -47,7 +48,7 @@ if uploaded_file:
         elif algo_option == "A*":
             path, nodes = astar(maze, start, goals, heuristic_option)
 
-        else:  # Greedy
+        else:
             path, nodes = greedy(maze, start, goals, heuristic_option)
 
         t1 = time.perf_counter()
@@ -55,8 +56,11 @@ if uploaded_file:
         if path:
             st.success(f"Solución encontrada ({algo_option})")
             st.write(f"📏 Largo del camino: {len(path)}")
+            img = maze_to_colors(maze, path, start, goals, scale=20)
+            st.image(img, caption="Camino encontrado", width=500)
         else:
             st.error("No hay solución")
 
         st.write(f"🔍 Nodos explorados: {nodes}")
         st.write(f"⏱️ Tiempo: {t1 - t0:.8f} segundos")
+    
