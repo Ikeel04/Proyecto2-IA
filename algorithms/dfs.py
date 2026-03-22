@@ -4,13 +4,15 @@ def dfs(maze, start, goals):
     stack = [(start, [start])]
     visited = set()
     nodes_explored = 0
+    explored_order = []
 
     while stack:
         current, path = stack.pop()
         nodes_explored += 1
+        explored_order.append(current)
 
         if current in goals:
-            return path, nodes_explored
+            return path, nodes_explored, explored_order
 
         if current in visited:
             continue
@@ -25,4 +27,4 @@ def dfs(maze, start, goals):
                 if maze[nx][ny] != '1' and (nx, ny) not in visited:
                     stack.append(((nx, ny), path + [(nx, ny)]))
 
-    return None, nodes_explored
+    return None, path

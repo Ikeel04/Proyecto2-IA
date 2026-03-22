@@ -15,13 +15,15 @@ def greedy(maze, start, goals, heuristic="manhattan"):
 
     visited = set()
     nodes_explored = 0
+    explored_order = []
 
     while open_list:
         h, current, path = heappop(open_list)
         nodes_explored += 1
+        explored_order.append(current)
 
         if current in goals:
-            return path, nodes_explored
+            return path, nodes_explored, explored_order
 
         if current in visited:
             continue
@@ -41,4 +43,4 @@ def greedy(maze, start, goals, heuristic="manhattan"):
 
                     heappush(open_list, (h, neighbor, path + [neighbor]))
 
-    return None, nodes_explored
+    return None, path
